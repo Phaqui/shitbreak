@@ -9,12 +9,11 @@
   <a href="https://kit.svelte.dev">
     <img src="./svelte-kit-horizontal2.svg" alt="SvelteKit logo">
   </a>
-  and with some
+  using
   <a href="https://www.typescriptlang.org/">
     <img src="./ts-logo-512.svg" alt="TypeScript logo" />
     TypeScript
   </a>
-  too!
 </p>
 <p>
   Hosting by
@@ -29,7 +28,7 @@
 
 <p>
   Free and open-source, the source is available on
-  <a href="https://github.com/">
+  <a href="https://github.com/Phaqui/shitbreak">
     <img id="githubmark" src="./GitHub-Mark-32px.png" alt="GitHub Mark" />
     <img id="githublogo" src="./GitHub_Logo_White.png" alt="GitHub Logo" />
   </a>
