@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+/.svelte
+/build
+/bucket
+/dist
+/functions
+DELETE_INDEXEDDB.txt
+wrangler.toml
+package-lock.json
+workers-site/
