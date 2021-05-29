@@ -149,8 +149,7 @@
 
   // references to the shit currently being asked for deletion, or currently
   // being edited. A Modal will show if any of them are non-null
-  // TODO change addshit to null
-  let deleteshit = null, editshit = null, addshit = true;
+  let deleteshit = null, editshit = null, addshit = null;
   let addshit_hr = 0, addshit_min = 0, addshit_sec = 0;
 
   const DATE_FORMAT = "#{l}, #{j}. #{M} #{Y}";
