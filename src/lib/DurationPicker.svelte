@@ -2,7 +2,7 @@
   import click_outside from '$lib/click_outside';
   import create_popper_action from '$lib/popper';
 
-  export let showSeconds = true;
+  export let showSeconds: boolean = true;
 
   // 5 hours, by default this component is used for the duration
   // of a shit, but I'm also using it for setting the time

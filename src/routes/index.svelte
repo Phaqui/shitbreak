@@ -161,12 +161,25 @@
   let addshit_date_chosen = false;
   let addshit_date_raw = new Date();
 
+  $: can_add =
+    addshit_date_chosen &&
+    (addshit_dt_hr > 0 || addshit_dt_min > 0) &&
+    (addshit_hr > 0 || addshit_min > 0 || addshit_sec > 0);
+
   function accept_delete() {
     shit_entries.del(deleteshit);
     deleteshit = null;
   }
 
+  function reset_add_modal() {
+    addshit_hr = addshit_min = addshit_sec = addshit_dt_hr = addshit_dt_min = 0;
+    addshit_date_chosen = false;
+    addshit_date_raw = new Date();
+  }
+
   async function accept_add() {
+    if (!can_add) return;
+
     const duration = addshit_hr*3600 + addshit_min*60 + addshit_sec;
 
     // clone the date from the datepicker, but substitute for the
@@ -183,9 +196,7 @@
       console.error(e);
     }
 
-    // reset the modal
-    addshit_hr = addshit_min = addshit_sec = addshit_dt_hr = addshit_dt_min = 0;
-    addshit_date_raw = new Date();
+    reset_add_modal();
 
     // close the modal
     addshit = null;
@@ -290,6 +301,7 @@
       <p>When did this beast of nature occur?</p>
       <div class="addshit-when-container">
         <DatePicker
+          style="margin: 0; justify-self: center;"
           bind:formattedSelected={addshit_date}
           bind:dateChosen={addshit_date_chosen}
           format={DATE_FORMAT}
@@ -297,10 +309,13 @@
           end={new Date()}
           bind:selected={addshit_date_raw}
           weekStart={1}
-          highlightColor='#FF0000'
-          dayBackgroundColor='#00FF00'
-          dayTextColor='#0000FF'
-          dayHighlightedBackgroundColor='#e20074'
+          backgroundColor='#352d27'
+          textColor='#DD6640'
+          dayTextColor='#DD6640'
+          dayBorderColor='#DD6640'
+          highlightColor='#DD6640'
+          dayBackgroundColor='#513F3E'
+          dayHighlightedBackgroundColor='#DD6640'
           dayHighlightedTextColor='#fff'
         >
           <button>{#if addshit_date_chosen}{addshit_date}{:else}Select date...{/if}</button>
@@ -309,22 +324,25 @@
           showSeconds={false}
           numHours={24}
           bind:hr={addshit_dt_hr}
-          bind:min={addshit_dt_min}
-        />
+          bind:min={addshit_dt_min} />
       </div>
 
       <p>And for how long did it last?</p>
-      <DurationPicker
-        bind:hr={addshit_hr}
-        bind:min={addshit_min}
-        bind:sec={addshit_sec}
-      />
+      <div style="margin: 0 auto;">
+        <DurationPicker
+          bind:hr={addshit_hr}
+          bind:min={addshit_min}
+          bind:sec={addshit_sec}
+        />
+      </div>
 
-      ADDITIONAL SALARY INFO<br>
+      (maybe feature: ability to customize salary for this)<br>
 
       <div class="buttons-container">
-        <button on:click={accept_add}>Save</button>
-        <button on:click={() => addshit = null}>Cancel</button>
+        <button disabled={!can_add} on:click={accept_add}>Save</button>
+        <button on:click={() => { reset_add_modal(); addshit = null; }}>
+          Cancel
+        </button>
       </div>
   </Modal>
 {/if}
@@ -413,7 +431,7 @@
 
   table {
     color: #dd6640;
-    width: 80%;
+    width: 98%;
     table-layout: fixed;
   }
 
@@ -458,7 +476,7 @@
   div.addshit-when-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /*justify-content: space-evenly;*/
     align-items: center;
   }
 

@@ -32,6 +32,10 @@ button {
     background-color: #3c251c;
 }
 
+button:disabled {
+    filter: grayscale(50%);
+}
+
 input[type=text] {
     border: 1px solid #ff3e00;
     background-color: #3c251c;
