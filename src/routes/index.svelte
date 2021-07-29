@@ -4,7 +4,7 @@
 
   import DatePicker from 'svelte-calendar';
 
-	import Counter from '$lib/Counter.svelte';
+  import Counter from '$lib/Counter.svelte';
   import Modal from '$lib/Modal.svelte';
   import DurationPicker from '$lib/DurationPicker.svelte';
   import create_popper_action from '$lib/popper';
@@ -29,7 +29,6 @@
   }
 
   function get_latest_shit_entries(shit_entries) {
-    console.log("get_latest_shit_entries()");
     const latest = shit_entries.slice(0, 10);
     latest.forEach((se, i) => {
       se.popper_el = popper_els[i];
@@ -56,7 +55,6 @@
 
   function on_timer_ended(ev: CustomEvent) {
     let elapsed = ev.detail.elapsed;
-    console.log(elapsed);
     elapsed /= 1000;
     let amount = $hourly * elapsed / 3600;
 
@@ -122,12 +120,10 @@
   let sw: ServiceWorker;
   if (browser) {
     navigator.serviceWorker.ready.then(registration => {
-      console.log("site: setting up message handler");
       sw = registration.active;
       sw.addEventListener('message', on_sw_message);
     });
   }
-
 
 
   // edits, deletes and additions

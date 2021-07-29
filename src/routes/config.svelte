@@ -7,6 +7,8 @@
   Configuration
 </h2>
 
+<p>(Note: All configuration is automatically saved when edited.)</p>
+
 <main>
   <Language />
 
@@ -22,5 +24,15 @@
     flex-direction: column;
     justify-content: center;
     width: 40vw;
+  }
+
+  @media (max-width: 600px) {
+    main {
+      width: 90vw;
+    }
+  }
+
+  p {
+    font-style: italic;
   }
 </style>

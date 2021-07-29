@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
@@ -11,7 +11,21 @@
   });
 
   $: active_page = $page.path;
+
+  let deferred_install_prompt;
+
+  function show_install_promotion() {
+    console.debug("app is ready to be installed");
+  }
+
+  function on_before_install_prompt(ev: any) {
+    ev.preventDefault();
+    deferred_install_prompt = ev;
+    show_install_promotion();
+  }
 </script>
+
+<svelte:window on:beforeinstallprompt={on_before_install_prompt} />
 
 <nav>
   <a class:active={active_page === "/"} href=".">Shitbreak!</a>

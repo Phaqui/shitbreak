@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
+  import Select from '$lib/Select.svelte';
 
   let value = "US";
+  let langs = ["United States", "Great Britain"];
 
-  function on_selected_change(
-    ev: Event & { target: EventTarget & HTMLSelectElement }
-  ) {
-    dispatch('subtagchange', { value: ev.target.value });
+  function on_change(ev: any) {
+    dispatch('subtagchange', { value });
   }
 
   onMount(() => {
@@ -16,8 +16,9 @@
 </script>
 
 <br />
-English as spoken in...<br />
-<select {value} on:change={on_selected_change}>
-  <option value="US">United States</option>
-  <option value="GB">United Kingdom</option>
-</select>
+...as spoken in...<br />
+<Select
+  {value}
+  on:change={on_change}
+  options={langs}
+/>

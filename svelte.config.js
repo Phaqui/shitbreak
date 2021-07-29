@@ -1,10 +1,11 @@
-const sveltePreprocess = require('svelte-preprocess');
-const node = require('@sveltejs/adapter-node');
-const cfworker = require('@sveltejs/adapter-cloudflare-workers');
-const pkg = require('./package.json');
+import sveltePreprocess from 'svelte-preprocess';
+//import node from '@sveltejs/adapter-node';
+import cfworker from '@sveltejs/adapter-cloudflare-workers';
+//import pkg from './package.json';
 
 /** @type {import('@sveltejs/kit').Config} */
-module.exports = {
+export default {
+//module.exports = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	preprocess: sveltePreprocess(),
@@ -19,11 +20,19 @@ module.exports = {
 
 		vite: {
             server: {
-                port: 3001,
+                hmr: {
+                    protocol: 'ws',
+                    port: 3001,
+                }
             },
+            /*
 			ssr: {
 				noExternal: Object.keys(pkg.dependencies || {})
 			}
+            */
+            ssr: {
+                noExternal: ['@popperjs/core']
+            }
 		}
 	}
 };

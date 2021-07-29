@@ -25,9 +25,9 @@
   });
 
   const format_duration_opts = {
-    hour_str: 'h',
-    min_str: 'm',
-    sec_str: 's'
+    hour_str_singular: 'h', hour_str_plural: 'h',
+    min_str_singular: 'm', min_str_plural: 'm',
+    sec_str_singular: 's', sec_str_plural: 's',
   };
   $: elapsed_printable = format_duration(elapsed / 1000, format_duration_opts);
 

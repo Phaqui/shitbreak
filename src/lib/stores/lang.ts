@@ -18,6 +18,10 @@ class Inner {
     constructor();
     constructor(raw: string);
     constructor(arg?: any) {
+        this._autodetected = "";
+        if (!browser) {
+            return;
+        }
         this._humanreadable = null;
         this._autodetected = window.navigator.language;
         if (arg === undefined) {
@@ -28,6 +32,15 @@ class Inner {
         }
     }
 
+    get lang() {
+        if (!browser) return "";
+        return this.raw.split('-')[0];
+    }
+
+    set lang(val: string) {
+        this._struct.raw = val;
+        this._struct.autodetected = val === "";
+    }
 
     get raw() {
         return this._struct.raw;
@@ -62,9 +75,19 @@ class Locale {
     private _store: Writable<Inner>;
 
     constructor() {
-        if (!browser) return;
+        if (!browser) {
+            this._store = writable(new Inner());
+            return;
+        }
         this._store = writable(new Inner(), (set) => {
-            const ls_value = window.localStorage.getItem('locale');
+            let ls_value = window.localStorage.getItem('locale');
+            
+            // TODO this should be temporary
+            if (ls_value === "[object Object]") {
+                console.debug("Locale: localStorage error, fixing it.");
+                ls_value = '';
+                window.localStorage.setItem('locale', ls_value);
+            }
             if (ls_value !== null) {
                 set(new Inner(ls_value));
             }
@@ -81,19 +104,16 @@ class Locale {
     */
 
     public set(locale: string) {
-        if (locale === "") {
-            this._store.update(inner => {
-                inner.set(locale);
-                return inner;
-            });
-            window.localStorage.removeItem('locale');
-        } else {
-            this._store.update(inner => {
-                inner.set(locale);
-                return inner;
-            });
-            window.localStorage.setItem('locale', locale);
+        if (locale.includes("[object Object]")) {
+            const errmsg = "lang.ts:Locale.set(): given locale has '[object Object]";
+            console.error(errmsg);
+            throw new Error(errmsg);
         }
+        this._store.update(inner => {
+            inner.set(locale);
+            return inner;
+        });
+        window.localStorage.setItem('locale', locale);
     }
 }
 

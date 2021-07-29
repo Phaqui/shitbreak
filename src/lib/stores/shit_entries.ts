@@ -63,9 +63,9 @@ class Shit {
 
     get formatted_duration() {
         let format_opts = {
-            hour_str: ' hr',
-            min_str: ' min',
-            sec_str: ' s'
+            hour_str_singular: ' hr', hour_str_plural: ' hrs',
+            min_str_singular: ' min', min_str_plural: ' mins',
+            sec_str_singular: ' s', sec_str_plural: ' s',
         };
         return format_duration(this._shit.duration, format_opts);
     }
@@ -144,7 +144,6 @@ class ShitEntries {
 
         request.onsuccess = (ev: any) => {
             this.db = ev.target.result;
-            resolve_dbready(this.db);
             let transaction = this.db.transaction(DB_OBJSTORE_NAME);
             let objstore = transaction.objectStore(DB_OBJSTORE_NAME);
             objstore.getAll().onsuccess = (ev) => {
@@ -153,6 +152,7 @@ class ShitEntries {
                     (shit_struct: ShitStruct) => new Shit(shit_struct));
                 store.set(shit_obj_array);
             };
+            resolve_dbready(this.db);
         };
 
         request.onerror = (ev: any) => {

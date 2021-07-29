@@ -2,6 +2,7 @@
   import { browser } from '$app/env';
   import { onMount } from 'svelte';
   import NewRuleModal from './_config_salary_newrulemodal.svelte';
+  import ConfigContainer from './_config_container.svelte';
 
   let ready = false;
 
@@ -31,36 +32,17 @@
   />
 {/if}
 
-<div class="header">Salary</div>
-Currency:
-<select>
-  <option>(select a currency...)</option>
-  <option>USD</option>
-  <option>NOK</option>
-</select>
-
-<br />
-
-<span id="hourly">
-  <span>Hourly salarly (gross)</span>
-{#if browser && ready}
-  <input type="text" id="hourly" bind:value={$hourly}>
-{/if}
-</span>
-
-<button on:click={() => newrule_modal = true}>Add salary rule</button>
-
-<p>Additional evening/weekend pay</p>
-<p>When</p>
-<p>Time interval</p> <p>From 1600</p> to <p>1800</p>
-<p>All</p><p>
-<p>Change:</p>
-<p>+ X CURRENCY / %</p>
+<ConfigContainer title="Salary">
+  <span id="hourly">
+    <span>Hourly base salarly (gross)</span>
+  {#if browser && ready}
+    <input type="text" id="hourly" bind:value={$hourly}>
+  {/if}
+  </span>
+  <button on:click={() => newrule_modal = true}>Add salary rule</button>
+</ConfigContainer>
 
 <style>
-  div.header {
-    font-size: 1.2em;
-  }
   input#hourly {
     width: 2em;
   }
@@ -71,4 +53,8 @@ Currency:
     align-items: center;
   }
   span#hourly input { margin-left: auto; }
+
+  button {
+    width: 100%;
+  }
 </style>

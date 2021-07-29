@@ -15,18 +15,27 @@
   });
 </script>
 
-<br />
-Norsk
-<span class:active={value === 'nb'} on:click={() => value = 'nb'}>bokmål</span>
-eller
-<span class:active={value === 'nn'} on:click={() => value = 'nn'}>Nynorsk</span>
+<div>
+  <span class:active={value === 'nb'} on:click={() => value = 'nb'}>Bokmål</span>
+  <span class:active={value === 'nn'} on:click={() => value = 'nn'}>Nynorsk</span>
+</div>
 
 <style>
+  div {
+    margin-top: 0.5em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
   span {
-    border: 1px solid gray;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ff3e00;
+    border-radius: 6px;
   }
 
   span.active {
-    border: 1px solid red;
+    background-color: #3c251c;
   }
 </style>
